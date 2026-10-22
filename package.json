@@ -1,0 +1,11 @@
+{
+  "name": "progetto-riservato",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Progetto riservato",
+  "scripts": {
+    "test": "node --test tests/regole.test.js",
+    "build": "node strumenti/impacchetta.js"
+  },
+  "license": "UNLICENSED"
+}

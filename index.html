@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Progetto riservato</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+<!--CORPO-->
+<div id="app">
+  <section id="schermo-titolo" class="schermo" aria-labelledby="titolo-gioco">
+    <div class="titolo-box">
+      <p class="sopratitolo">Tram di servizio n. 0 · corsa notturna</p>
+      <h1 id="titolo-gioco">L'ultima corsa<br>di Vespera</h1>
+      <p class="sottotitolo" id="sottotitolo"></p>
+      <div class="menu-titolo">
+        <button id="btn-nuova" class="btn primario">Nuova partita</button>
+        <button id="btn-continua" class="btn" hidden>Continua</button>
+        <button id="btn-impostazioni-t" class="btn">Impostazioni</button>
+        <button id="btn-comandi-t" class="btn">Comandi</button>
+      </div>
+      <p class="nota">Partita singola, a turni, senza limiti di tempo. Il salvataggio è automatico a ogni turno.</p>
+    </div>
+  </section>
+
+  <section id="schermo-gioco" class="schermo" hidden>
+    <header class="barra">
+      <span class="barra-nome">Vespera · Capitolo 1</span>
+      <span class="barra-obiettivo" id="obiettivo"></span>
+      <span class="barra-azioni">
+        <button id="btn-diario" class="btn piccolo" title="Diario (J)">Diario</button>
+        <button id="btn-menu" class="btn piccolo" title="Menu (Esc)">Menu</button>
+      </span>
+    </header>
+    <div class="area">
+      <div class="mappa-wrap" id="mappa-wrap">
+        <canvas id="mappa" aria-label="Mappa della missione"></canvas>
+        <div id="etichetta-casella" class="etichetta-casella" hidden></div>
+      </div>
+      <aside class="pannello" aria-label="Stato e comandi">
+        <div class="stato">
+          <div class="riga-stato">
+            <span class="etichetta">Turno</span><span id="v-turno" class="valore num">1</span>
+          </div>
+          <div class="riga-stato">
+            <span class="etichetta">Azioni</span><span id="v-azioni" class="pips"></span>
+          </div>
+          <div class="riga-stato">
+            <span class="etichetta">Integrità</span><span id="v-pv" class="pips"></span>
+          </div>
+          <div class="riga-stato">
+            <span class="etichetta">Cariche</span><span id="v-cariche" class="pips"></span>
+          </div>
+          <div class="riga-stato allarme-riga">
+            <span class="etichetta">Allarme</span>
+            <span class="allarme-barra" id="v-allarme" role="meter" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0"></span>
+          </div>
+          <div class="riga-stato">
+            <span class="etichetta">Selettore</span><span id="v-selettore" class="valore"></span>
+          </div>
+        </div>
+
+        <div class="gruppo">
+          <h2>Segnali</h2>
+          <div class="segnali">
+            <button class="btn segnale s-aprire" data-segnale="aprire"><span class="sim" aria-hidden="true">⌒</span><span>Aprire</span><kbd data-tasto="aprire"></kbd></button>
+            <button class="btn segnale s-richiamare" data-segnale="richiamare"><span class="sim" aria-hidden="true">≋</span><span>Richiamare</span><kbd data-tasto="richiamare"></kbd></button>
+            <button class="btn segnale s-fermare" data-segnale="fermare"><span class="sim" aria-hidden="true">■</span><span>Fermare</span><kbd data-tasto="fermare"></kbd></button>
+          </div>
+        </div>
+
+        <div class="gruppo">
+          <h2>Moduli</h2>
+          <div class="moduli">
+            <button class="btn modulo" data-modulo="prolunga"><span>Prolunga</span><kbd data-tasto="prolunga"></kbd></button>
+            <button class="btn modulo" data-modulo="specchio"><span>Specchio</span><kbd data-tasto="specchio"></kbd></button>
+            <button class="btn modulo" data-modulo="esca"><span>Esca</span><kbd data-tasto="esca"></kbd></button>
+          </div>
+        </div>
+
+        <div class="gruppo azioni-base">
+          <button id="btn-usa" class="btn"><span id="lbl-usa">Interagisci</span><kbd data-tasto="usa"></kbd></button>
+          <button id="btn-attendi" class="btn"><span>Fine turno</span><kbd data-tasto="attendi"></kbd></button>
+          <button id="btn-annulla" class="btn"><span>Annulla</span><kbd data-tasto="annulla"></kbd></button>
+          <button id="btn-aiuto" class="btn"><span>Suggerimento</span><kbd data-tasto="aiuto"></kbd></button>
+        </div>
+
+        <div id="scheda" class="scheda" aria-live="polite"></div>
+        <ol id="registro" class="registro" aria-live="polite"></ol>
+      </aside>
+    </div>
+  </section>
+
+  <div id="dialogo" class="dialogo" hidden role="dialog" aria-live="polite">
+    <div class="dialogo-box">
+      <p class="dialogo-chi" id="dialogo-chi"></p>
+      <p class="dialogo-testo" id="dialogo-testo"></p>
+      <button id="dialogo-avanti" class="btn primario piccolo">Avanti</button>
+    </div>
+  </div>
+
+  <div id="finestra" class="finestra" hidden role="dialog" aria-modal="true" aria-labelledby="finestra-titolo">
+    <div class="finestra-box">
+      <h2 id="finestra-titolo"></h2>
+      <div id="finestra-corpo"></div>
+      <div class="finestra-azioni" id="finestra-azioni"></div>
+    </div>
+  </div>
+</div>
+<!--/CORPO-->
+<script src="src/engine.js"></script>
+<script src="src/level1.js"></script>
+<script src="src/storia.js"></script>
+<script src="src/audio.js"></script>
+<script src="src/ui.js"></script>
+</body>
+</html>
